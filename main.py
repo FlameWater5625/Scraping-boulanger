@@ -6,6 +6,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 import time
+import mysql.connector
 
 # URLS
 URLS = {
@@ -73,7 +74,41 @@ def scrape_boulanger(category):
     print("\n📋 Produits trouves :\n")
     print(df)
 
+    # Insert data into MySQL database
+    insert_into_mysql(produits)
+
     return df
+
+# Function to insert data into MySQL
+def insert_into_mysql(produits):
+    try:
+        # Connect to MySQL database
+        conn = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database="boulanger_scraping"
+        )
+        cursor = conn.cursor()
+
+        # Insert each product into the database
+        for produit in produits:
+            sql = "INSERT INTO produits (produit, note, avis) VALUES (%s, %s, %s)"
+            val = (produit["Produit"], produit["Note"], produit["Avis"])
+            cursor.execute(sql, val)
+
+        # Commit the transaction
+        conn.commit()
+        print("✅ Données insérées avec succès dans la base de données.")
+
+    except mysql.connector.Error as err:
+        print(f"❌ Erreur lors de l'insertion des données: {err}")
+
+    finally:
+        if conn.is_connected():
+            cursor.close()
+            conn.close()
+            print("🔌 Connexion à la base de données fermée.")
 
 # Main
 def menu():
