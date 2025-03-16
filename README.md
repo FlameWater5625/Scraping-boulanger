@@ -1,7 +1,3 @@
-Voici la version mise à jour de ton README.md, intégrant l’installation avec pip et conda ! 🚀
-
-⸻
-
 📂 README.md
 
 # 📊 Scraping & Analyse de Produits Boulanger
@@ -16,35 +12,6 @@ Un projet complet de **scraping de produits**, **stockage en base de données**,
 ✅ **Base de données MySQL** 🗄️ → Stockage structuré des produits scrappés.  
 ✅ **Nettoyage des données** 🧹 → Traitement des incohérences et structuration des données.  
 ✅ **Analyse et Visualisation** 📊 → Graphiques interactifs pour explorer les données.  
-
----
-
-## 📂 **Organisation du Projet**
-
-scraping_project/
-│── 📂 data/                   # Données brutes et nettoyées
-│   ├── raw/                   # Données brutes scrappées
-│   ├── cleaned/               # Données nettoyées après preprocessing
-│   ├── visualisations/        # Sauvegardes des graphiques générés
-│── 📂 database/                # Gestion MySQL
-│   ├── database.py             # Connexion, création et gestion de la base
-│── 📂 scraping/                # Scraping des produits
-│   ├── scraping.py             # Fonction principale de scraping
-│── 📂 cleaning/                # Nettoyage des données
-│   ├── nettoyage.py            # Menu général de nettoyage
-│   ├── nettoyage_tele.py       # Nettoyage des TV
-│   ├── nettoyage_console.py    # Nettoyage des consoles
-│   ├── nettoyage_telephone.py  # Nettoyage des téléphones
-│   ├── nettoyage_ordinateur.py # Nettoyage des ordinateurs
-│── 📂 visualisation/           # Analyse et Graphiques
-│   ├── visualisation.py        # Menu et affichage des graphiques
-│── 📂 config/                  # Configuration et variables d’environnement
-│   ├── .env                    # Variables MySQL
-│── main.py                     # Menu principal du projet
-│── requirements.txt             # Liste des dépendances pour pip
-│── environment.yml              # Fichier d’installation pour Conda
-│── .gitignore                   # Exclusion des fichiers inutiles
-│── README.md                    # Documentation du projet
 
 ---
 
