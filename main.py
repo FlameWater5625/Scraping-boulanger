@@ -14,6 +14,10 @@ URLS = {
     "electromenagers": "https://www.boulanger.com/opeco/me0325micb"
 }
 
+# Global MySQL connection and cursor
+conn = None
+cursor = None
+
 # Fonction de scraping main
 def scrape_boulanger(category):
     url = URLS.get(category)
@@ -84,16 +88,8 @@ def scrape_boulanger(category):
 
 # Function to reset the MySQL table
 def reset_mysql_table():
+    global conn, cursor
     try:
-        # Connect to MySQL database
-        conn = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="",
-            database="boulanger_scraping"
-        )
-        cursor = conn.cursor()
-
         # Truncate the table to remove all existing data
         cursor.execute("TRUNCATE TABLE produits")
         print("✅ Table 'produits' vidée avec succès.")
@@ -101,24 +97,10 @@ def reset_mysql_table():
     except mysql.connector.Error as err:
         print(f"❌ Erreur lors de la réinitialisation de la table: {err}")
 
-    finally:
-        if conn.is_connected():
-            cursor.close()
-            conn.close()
-            print("🔌 Connexion à la base de données fermée.")
-
 # Function to insert data into MySQL
 def insert_into_mysql(produits):
+    global conn, cursor
     try:
-        # Connect to MySQL database
-        conn = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="",
-            database="boulanger_scraping"
-        )
-        cursor = conn.cursor()
-
         # Insert each product into the database
         for produit in produits:
             sql = "INSERT INTO produits (produit, note, avis) VALUES (%s, %s, %s)"
@@ -132,36 +114,48 @@ def insert_into_mysql(produits):
     except mysql.connector.Error as err:
         print(f"❌ Erreur lors de l'insertion des données: {err}")
 
+# Main
+def menu():
+    global conn, cursor
+    try:
+        # Connect to MySQL database
+        conn = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database="boulanger_scraping"
+        )
+        cursor = conn.cursor()
+        print("🔌 Connexion à la base de données établie.")
+
+        while True:
+            print("\n📌 Menu:")
+            print("1️⃣ Scraper les ordinateurs portables")
+            print("2️⃣ Scraper les electromenagers")
+            print("3️⃣ Quitter")
+
+            choix = input("👉 Choisissez une option : ")
+
+            if choix == "1":
+                print("🔍 Scraping des ordinateurs en cours...")
+                scrape_boulanger("ordinateurs")
+
+            elif choix == "2":
+                print("🔍 Scraping des electromenagers en cours...")
+                scrape_boulanger("electromenagers")
+
+            elif choix == "3":
+                print("👋 Bye !")
+                break
+
+            else:
+                print("❌ Option invalide, reessayez.")
+
     finally:
-        if conn.is_connected():
+        if conn and conn.is_connected():
             cursor.close()
             conn.close()
             print("🔌 Connexion à la base de données fermée.")
-
-# Main
-def menu():
-    while True:
-        print("\n📌 Menu:")
-        print("1️⃣ Scraper les ordinateurs portables")
-        print("2️⃣ Scraper les electromenagers")
-        print("3️⃣ Quitter")
-
-        choix = input("👉 Choisissez une option : ")
-
-        if choix == "1":
-            print("🔍 Scraping des ordinateurs en cours...")
-            scrape_boulanger("ordinateurs")
-
-        elif choix == "2":
-            print("🔍 Scraping des electromenagers en cours...")
-            scrape_boulanger("electromenagers")
-
-        elif choix == "3":
-            print("👋 Bye !")
-            break
-
-        else:
-            print("❌ Option invalide, reessayez.")
 
 # Lancer le programme
 if __name__ == "__main__":
