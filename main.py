@@ -74,10 +74,38 @@ def scrape_boulanger(category):
     print("\n📋 Produits trouves :\n")
     print(df)
 
+    # Reset MySQL database before adding anything
+    reset_mysql_table()
+
     # Insert data into MySQL database
     insert_into_mysql(produits)
 
     return df
+
+# Function to reset the MySQL table
+def reset_mysql_table():
+    try:
+        # Connect to MySQL database
+        conn = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database="boulanger_scraping"
+        )
+        cursor = conn.cursor()
+
+        # Truncate the table to remove all existing data
+        cursor.execute("TRUNCATE TABLE produits")
+        print("✅ Table 'produits' vidée avec succès.")
+
+    except mysql.connector.Error as err:
+        print(f"❌ Erreur lors de la réinitialisation de la table: {err}")
+
+    finally:
+        if conn.is_connected():
+            cursor.close()
+            conn.close()
+            print("🔌 Connexion à la base de données fermée.")
 
 # Function to insert data into MySQL
 def insert_into_mysql(produits):
