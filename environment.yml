@@ -1,0 +1,17 @@
+name: scraping_env  # Nom de l'environnement Conda
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - requests
+  - beautifulsoup4
+  - selenium
+  - mysql-connector-python
+  - pandas
+  - numpy
+  - matplotlib
+  - seaborn
+  - pip
+  - pip:
+      - python-dotenv
