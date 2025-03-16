@@ -1,46 +1,52 @@
-import pandas as pd
+import nettoyage_tele
+import nettoyage_console
+import nettoyage_telephone
+import nettoyage_ordinateur
 
-# Chargement du fichier
-df = pd.read_csv("ordinateurs_boulanger.csv")
+def menu_nettoyage():
+    """ Menu permettant de choisir quel type de données nettoyer """
+    while True:
+        print("\n📌 Menu Nettoyage :")
+        print("1️⃣ Nettoyer les téléviseurs")
+        print("2️⃣ Nettoyer les consoles")
+        print("3️⃣ Nettoyer les téléphones")
+        print("4️⃣ Nettoyer les ordinateurs")
+        print("5️⃣ Nettoyer tout")
+        print("6️⃣ Retour au menu principal")
 
-# Affichage des informations initiales
-print("---------------------------------------- \n")
-print(df.info())
+        choix = input("👉 Choisissez une option : ")
 
-# Suppression des valeurs manquantes
-print("---------------------------------------- \n")
-print("Nombres de valeurs manquantes sur le dataframe \n")
-print(df.isnull().sum())
+        if choix == "1":
+            print("🔍 Nettoyage des téléviseurs en cours...")
+            nettoyage_tele.clean_teles()
+            print("✅ Nettoyage des téléviseurs terminé !")
 
-df = df.dropna()
+        elif choix == "2":
+            print("🔍 Nettoyage des consoles en cours...")
+            nettoyage_console.clean_consoles()
+            print("✅ Nettoyage des consoles terminé !")
 
-# Suppression des doublons
-print("---------------------------------------- \n")
-print(df.duplicated().sum())
-df = df.drop_duplicates()
+        elif choix == "3":
+            print("🔍 Nettoyage des téléphones en cours...")
+            nettoyage_telephone.clean_telephones()
+            print("✅ Nettoyage des téléphones terminé !")
 
-# Traitement des avis
-print("---------------------------------------- \n")
-print("Remplissage des valeurs manquantes sur le dataframe \n")
-df["Avis"] = df["Avis"].fillna("Ordinateur performant")
-df["Avis"] = df["Avis"].replace("Avis non disponible", "Ordinateur performant")
+        elif choix == "4":
+            print("🔍 Nettoyage des ordinateurs en cours...")
+            nettoyage_ordinateur.clean_ordinateurs()
+            print("✅ Nettoyage des ordinateurs terminé !")
 
+        elif choix == "5":
+            print("🔍 Nettoyage de toutes les catégories en cours...")
+            nettoyage_tele.clean_teles()
+            nettoyage_console.clean_consoles()
+            nettoyage_telephone.clean_telephones()
+            nettoyage_ordinateur.clean_ordinateurs()
+            print("✅ Tous les nettoyages sont terminés !")
 
-# Traitement des notes
-df["Note"] = pd.to_numeric(df["Note"], errors='coerce')
-df["Note"] = df["Note"].fillna(df["Note"].mean())
-df["Note"] = df["Note"].round(2)
+        elif choix == "6":
+            print("🔙 Retour au menu principal...")
+            break
 
-# Vérification des doublons après nettoyage
-print("---------------------------------------- \n")
-print("Recherche des doublons")
-print(df[df.duplicated()])
-print(df.duplicated().sum())
-
-# Affichage des informations après nettoyage
-print("---------------------------------------- \n")
-print("\n Données après nettoyage :\n")
-print(df.info())
-
-# Sauvegarde du fichier nettoyé
-df.to_csv("ordinateurs-boulanger_cleaned.csv", index=False)
+        else:
+            print("❌ Option invalide, réessayez.")

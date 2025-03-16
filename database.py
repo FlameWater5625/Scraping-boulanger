@@ -50,6 +50,17 @@ def connect_db():
         print(f"❌ Erreur MySQL : {err}")
         return None, None
 
+# Suppression de la table si elle existe déjà (pour éviter les doublons et garantir des données fraîches)
+def drop_table_if_exists(site, categorie, cursor, conn):
+    """ Supprime la table si elle existe pour garantir des données fraîches """
+    table_name = f"{site}_{categorie}".replace("-", "_")  # Nettoyage du nom de table
+    try:
+        cursor.execute(f"DROP TABLE IF EXISTS {table_name}")
+        conn.commit()
+        print(f"🗑️ Table `{table_name}` supprimée avec succès.")
+    except mysql.connector.Error as err:
+        print(f"❌ Erreur lors de la suppression de la table `{table_name}`: {err}")
+
 # Création dynamique de la table pour chaque site + catégorie
 def create_table(site, categorie, cursor, conn):
     """ Crée une table spécifique pour chaque site et catégorie """

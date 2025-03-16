@@ -16,7 +16,6 @@ BROWSER = os.getenv("BROWSER", "Safari")
 # URLs des catégories
 URLS = {
     "ordinateurs": "https://www.boulanger.com/c/tous-les-ordinateurs-portables",
-    "electromenagers": "https://www.boulanger.com/opeco/me0325micb",
     "console": "https://www.boulanger.com/c/console-de-jeux",
     "telephone": "https://www.boulanger.com/c/smartphone-telephone-portable",
     "tele": "https://www.boulanger.com/c/televiseur"
