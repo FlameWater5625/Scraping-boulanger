@@ -1,5 +1,5 @@
 import nettoyage_tele
-import nettoyage_console
+import nettoyage.nettoyage_console as nettoyage_console
 import nettoyage_telephone
 import nettoyage_ordinateur
 

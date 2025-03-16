@@ -1,1 +1,35 @@
-__pycache__
+# 📂 Ignorer les fichiers de configuration sensibles
+config/.env
+
+# 📂 Ignorer les fichiers Python compilés
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# 📂 Ignorer les logs
+logs/
+*.log
+
+# 📂 Ignorer les fichiers de dépendances installées (si tu utilises un venv)
+venv/
+.env/
+.venv/
+Pipfile
+Pipfile.lock
+
+# 📂 Ignorer les fichiers de données générés
+data/raw/
+data/cleaned/
+data/visualisations/
+
+# 📂 Ignorer les captures d’écran ou images temporaires
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+
+# 📂 Ignorer les fichiers de logs et outputs inutiles
+nohup.out
+*.swp

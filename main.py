@@ -1,6 +1,6 @@
-import scraping
-import database
-import nettoyage
+import scraping.scraping as scraping
+import database.database as database
+import nettoyage.nettoyage as nettoyage
 
 def main():
     """ Menu principal : Scraping, Insertion en BDD et Nettoyage """
