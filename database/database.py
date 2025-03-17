@@ -14,8 +14,9 @@ MYSQL_DATABASE = "scraping_data"
 
 # Fonction pour créer la base de données si elle n'existe pas
 def create_database():
-    """ Vérifie et crée la base de données si elle n'existe pas """
+    """ Vérifie et crée la base de données si elle n'existe pas, en supprimant d'abord tout son contenu """
     try:
+        # Établir une connexion au serveur MySQL
         conn = mysql.connector.connect(
             host=MYSQL_HOST,
             user=MYSQL_USER,
@@ -23,8 +24,16 @@ def create_database():
             port=MYSQL_PORT
         )
         cursor = conn.cursor()
-        cursor.execute(f"CREATE DATABASE IF NOT EXISTS {MYSQL_DATABASE}")
-        print(f"✅ Base de données '{MYSQL_DATABASE}' vérifiée/créée.")
+
+        # Supprimer la base de données si elle existe
+        cursor.execute(f"DROP DATABASE IF EXISTS {MYSQL_DATABASE}")
+        print(f"🗑️ Base de données '{MYSQL_DATABASE}' supprimée si elle existait.")
+
+        # Créer la base de données
+        cursor.execute(f"CREATE DATABASE {MYSQL_DATABASE}")
+        print(f"✅ Base de données '{MYSQL_DATABASE}' créée.")
+
+        # Fermer le curseur et la connexion
         cursor.close()
         conn.close()
     except mysql.connector.Error as err:
