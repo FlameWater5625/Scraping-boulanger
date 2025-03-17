@@ -63,7 +63,7 @@ def clean_product_name(product_name):
 
     return marque, modele
 
-def clean_smartphones():
+def clean_telephones():
     """ Nettoie les données de boulanger_telephone et les insère dans boulanger_telephone_clean """
     conn = connect_db()
     cursor = conn.cursor()
@@ -116,4 +116,4 @@ def clean_smartphones():
     conn.close()
 
 if __name__ == "__main__":
-    clean_smartphones()
+    clean_telephones()
