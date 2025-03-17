@@ -67,13 +67,13 @@ def reset_clean_table(cursor, conn):
 
 def clean_product_name(product_name):
     """ Sépare le type, la marque et le modèle d'une console """
-    words = product_name.split()  # Découper en mots
     type_console = "Console"  # Type par défaut
 
     # Identifier un type spécifique si présent
     for key, value in TYPES_SPECIFIQUES.items():
         if key.lower() in product_name.lower():
             type_console = value
+            product_name = product_name.replace(key, "").replace(value, "").strip()
             break
 
     # Trouver la marque dans le produit, même si elle n'est pas au début
@@ -81,8 +81,12 @@ def clean_product_name(product_name):
     for brand in MARQUES:
         if brand in product_name.upper():
             marque = brand.capitalize() if brand not in ["XBOX", "PLAYSTATION"] else brand  # Xbox et PlayStation restent en majuscules
+            product_name = product_name.replace(brand, "").strip()
             break
 
+    if type_console == "Console":
+        product_name = product_name.replace("Console", "").strip()
+        
     # Extraire le modèle en supprimant la marque détectée du produit
     modele = product_name.replace(marque, "").strip() if marque != "Inconnu" else product_name
 
@@ -92,6 +96,8 @@ def clean_product_name(product_name):
             if key in product_name:
                 marque = value
                 break
+
+
     
     # Nettoyer le modèle : supprimer les espaces inutiles et les sauts de ligne
     modele = modele.replace("\n", " ")  # Remplacer les sauts de ligne par des espaces
