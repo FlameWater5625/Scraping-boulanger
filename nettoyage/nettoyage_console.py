@@ -92,6 +92,10 @@ def clean_product_name(product_name):
             if key in product_name:
                 marque = value
                 break
+    
+    # Nettoyer le modèle : supprimer les espaces inutiles et les sauts de ligne
+    modele = modele.replace("\n", " ")  # Remplacer les sauts de ligne par des espaces
+    modele = " ".join(modele.split())  # Supprimer les espaces multiples et normaliser
 
     return type_console, marque, modele
 
