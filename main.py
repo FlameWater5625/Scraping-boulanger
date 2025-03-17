@@ -1,6 +1,8 @@
 import scraping.scraping as scraping
 import database.database as database
 import nettoyage.nettoyage as nettoyage
+import visualisation.visualisation as visualisation
+import toCSV.toCSV as toCSV
 
 def main():
     """ Menu principal : Scraping, Insertion en BDD et Nettoyage """
@@ -17,7 +19,9 @@ def main():
         print("3️⃣ Scraper les téléphones")
         print("4️⃣ Scraper les téléviseurs")
         print("5️⃣ Passer au nettoyage des données")
-        print("6️⃣ Quitter")
+        print("6️⃣ Passer a la visualisation des données")
+        print("7️⃣ Sauvegarder en CSV")
+        print("8️⃣ Quitter")
 
         choix = input("👉 Choisissez une option : ")
 
@@ -36,7 +40,8 @@ def main():
             database.drop_table_if_exists(site, categorie, cursor, conn)
 
             # Scraping des nouvelles données
-            data = scraping.scrape_boulanger(categorie, max_pages=3)
+            max_pages=1
+            data = scraping.scrape_boulanger(categorie, max_pages)
             if data is not None:
                 print("✅ Scraping terminé.")
 
@@ -51,6 +56,14 @@ def main():
             nettoyage.menu_nettoyage()  # 🔥 Ajout du menu de nettoyage
 
         elif choix == "6":
+            print("\n🔽 Passage a la visualisation des données...")
+            visualisation.menu_visu()  # 🔥 Ajout du menu de visualisation
+        
+        elif choix == "7":
+            print("\n🔽 Passage en CSV...")
+            toCSV.toCSV()  # 🔥 Ajout du menu de visualisation
+
+        elif choix == "8":
             print("👋 Bye !")
             break
 
