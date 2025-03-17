@@ -23,7 +23,7 @@ def menu_visu():
         if choix == "1":
             print("🔍 Visualisation des ordinateurs en cours...")
             visualisation_ordi.visualize_ordi()
-            print("✅ Visualisation des consoordinateurs les terminé !")
+            print("✅ Visualisation des ordinateurs les terminé !")
 
         if choix == "2":
            print("🔍 Visualisation des consoles en cours...")
