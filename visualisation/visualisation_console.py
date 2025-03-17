@@ -66,7 +66,7 @@ def visualize_console():
     df_filtre = df[df["avis"] >= 10]
 
     # Sélectionner les 30 meilleures consoles en priorisant celles avec le plus d'avis
-    top_consoles = df.sort_values(by=["note", "avis"], ascending=[False, False]).head(30)
+    top_consoles = df_filtre.sort_values(by=["note", "avis"], ascending=[False, False]).head(30)
 
     plt.figure(figsize=(12, 12))  # Ajuster la hauteur pour une meilleure lisibilité
     sns.barplot(y=top_consoles["modele"], x=top_consoles["note"], hue=top_consoles["marque"], dodge=False,
