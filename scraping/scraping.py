@@ -33,7 +33,7 @@ def get_driver():
     
     return driver
 
-def scrape_boulanger(category, max_pages=3):
+def scrape_boulanger(category, max_pages):
     """ Scrape les produits d'une catégorie sur Boulanger avec le navigateur défini """
     url = URLS.get(category)
     if not url:
@@ -47,7 +47,7 @@ def scrape_boulanger(category, max_pages=3):
         full_url = f"{url}?page={page}"
         print(f"\n🌍 Connexion à {full_url}...")
         driver.get(full_url)
-        time.sleep(random.uniform(3, 6))  # Pause aléatoire pour éviter les blocages
+        time.sleep(random.uniform(3, 4))  # Pause aléatoire pour éviter les blocages
 
         page_source = driver.page_source
         soup = BeautifulSoup(page_source, "html.parser")
