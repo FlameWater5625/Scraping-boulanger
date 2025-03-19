@@ -1,5 +1,5 @@
 # 📂 Ignorer les fichiers de configuration sensibles
-config/.env
+docs/*.csv
 
 # 📂 Ignorer les fichiers Python compilés
 __pycache__/

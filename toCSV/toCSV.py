@@ -36,11 +36,16 @@ def toCSV():
         "televiseur": "boulanger_tele_clean"
     }
 
+    if not os.path.exists("docs"):
+        os.makedirs("docs")
+
     for categorie, table in tables.items():
-        query = f"SELECT marque, modele, note, avis, prix FROM {table}"
-        df = pd.read_sql(query, conn)
-        df.to_csv(f"{categorie}.csv", index=False)
-        print("✅ Sauvegard de" + table + "en CSV teminer !")
+        try:
+            query = f"SELECT marque, modele, note, avis, prix FROM {table}"
+            df = pd.read_sql(query, conn)
+            df.to_csv(f"docs/{categorie}.csv", index=False)
+            print("✅ Sauvegard de" + table + "en CSV teminer !")
+        except: Exception
 
     conn.close()
 
