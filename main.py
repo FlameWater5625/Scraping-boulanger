@@ -40,7 +40,7 @@ def main():
             database.drop_table_if_exists(site, categorie, cursor, conn)
 
             # Scraping des nouvelles données
-            max_pages=2
+            max_pages=1
             data = scraping.scrape_boulanger(categorie, max_pages)
             if data is not None:
                 print("✅ Scraping terminé.")
